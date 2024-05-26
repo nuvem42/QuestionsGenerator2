@@ -21,12 +21,10 @@ from transformers import pipeline
 import nltk
 nltk.download('punkt')
 app = Flask(__name__)
-'''Load the pre-trained T5 model and tokenizer'''
 print("Loading model and tokenizer...")
 tokenizer = AutoTokenizer.from_pretrained("valhalla/t5-small-e2e-qg", model_max_length=512, legacy=False)
 model = AutoModelForSeq2SeqLM.from_pretrained("valhalla/t5-small-e2e-qg")
 print("Model and tokenizer loaded.")
-'''Define a function to generate questions'''
 def generate_questions(text_data):
     input_text = f"generate questions: {text_data}"
     input_ids = tokenizer.encode(input_text, return_tensors="pt")
@@ -44,10 +42,9 @@ def generate_questions(text_data):
     )
     gen_text = tokenizer.decode(gen_ids[0], skip_special_tokens=True)
 
-    '''Replace the separator token with a newline character'''
     gen_text = gen_text.replace('<sep>', '\n')
 
-    '''Use nltk's sent_tokenize to split questions'''
+
     questions = nltk.sent_tokenize(gen_text)
     return questions
 
