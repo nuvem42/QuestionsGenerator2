@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>T5 Question Generator</title>
+  <style>
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label {
+      margin-bottom: 10px;
+    }
+    textarea {
+      margin-bottom: 10px;
+    }
+    #questions {
+      max-width: 50%; /* adjust the width to your liking */
+      margin: 20px auto; /* add some margin to create space around the questions */
+      padding: 20px; /* add some padding to create space between the questions and the border */
+      border: 1px solid #ccc; /* add a border to visually separate the questions */
+      border-radius: 10px; /* add some rounded corners to the border */
+    }
+    .container {
+  text-align: center;
+  padding: 20px;
+  
+
+    }
+    .container > * {
+      width: 100%; /* make all child elements take up the full width */
+    }
+    .container > h1 {
+      margin-bottom: 20px; /* add some margin to create space between the title and the form */
+    }
+  </style>
+</head>
+<body style="background-image: url('static/Design sem nome.jpg'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+  <div class="container">
+    <h1>T5 Question Generator</h1>
+    <form id="question-form">
+      <label for="text_data">Enter a paragraph text:</label>
+      <textarea id="text_data" name="text_data" rows="10" cols="50"></textarea>
+      <button type="submit">Generate Questions</button>
+    </form>
+    <div id="questions">
+      <h2>Generated Questions:</h2>
+      <ul id="questions-list"></ul>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
