@@ -2,42 +2,35 @@
 
 
 ## Step 1: create and activate virtual enviroment
-'''
-python -m venv venv
-'''
-'''
-source venv/bin/activate
-'''
-'''
-pip install sentencepiece protobuf torch transformers flask nltk
-'''
 
-# Step 2: Create a new Flask project
+    python -m venv venv
 
-mkdir t5-question-generator
-cd t5-question-generator
+    source venv/bin/activate
 
-# step 3: Create a new file app.py and add the following code:
-from flask import Flask, request, jsonify, render_template
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-import torch
-from transformers import pipeline
-import nltk
-
-nltk.download('punkt')
-
-app = Flask(__name__)
+    pip install sentencepiece protobuf torch transformers flask nltk
 
 
-print("Loading model and tokenizer...")
-tokenizer = AutoTokenizer.from_pretrained("valhalla/t5-small-e2e-qg", model_max_length=512, legacy=False)
-model = AutoModelForSeq2SeqLM.from_pretrained("valhalla/t5-small-e2e-qg")
-print("Model and tokenizer loaded.")
+## step 3: Create a new file app.py and add the following code:
+    from flask import Flask, request, jsonify, render_template
+    from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+    import torch
+    from transformers import pipeline
+    import nltk
+
+    nltk.download('punkt')
+
+    app = Flask(__name__)
 
 
-def generate_questions(text_data):
-    input_text = f"generate questions: {text_data}"
-    input_ids = tokenizer.encode(input_text, return_tensors="pt")
+    print("Loading model and tokenizer...")
+    tokenizer = AutoTokenizer.from_pretrained("valhalla/t5-small-e2e-qg", model_max_length=512, legacy=False)
+    model = AutoModelForSeq2SeqLM.from_pretrained("valhalla/t5-small-e2e-qg")
+    print("Model and tokenizer loaded.")
+
+
+    def generate_questions(text_data):
+        input_text = f"generate questions: {text_data}"
+        input_ids = tokenizer.encode(input_text, return_tensors="pt")
 
     gen_ids = model.generate(
         input_ids,
@@ -60,17 +53,17 @@ def generate_questions(text_data):
     questions = nltk.sent_tokenize(gen_text)
     return questions
 
-@app.route('/', methods=['GET'])
-def index():
-    return render_template('index.html')
+    @app.route('/', methods=['GET'])
+    def index():
+       return render_template('index.html')
 
-@app.route('/generate', methods=['POST'])
-def generate():
-    text_data = request.form['text_data']
-    questions = generate_questions(text_data)
-    return jsonify({'questions': questions})
+    @app.route('/generate', methods=['POST'])
+    def generate():
+        text_data = request.form['text_data']
+        questions = generate_questions(text_data)
+        return jsonify({'questions': questions})
 
-if __name__ == '__main__':
+   if __name__ == '__main__':
     print("Starting Flask app...")
     app.run(debug=True)
     print("Flask app is running.")
