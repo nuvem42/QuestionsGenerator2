@@ -1,11 +1,16 @@
-# QuestionsGenerator2
+# QuestionsGenerator
 
 
-# Step 1: create and activate enviroment
+## Step 1: create and activate virtual enviroment
+'''
 python -m venv venv
+'''
+'''
 source venv/bin/activate
+'''
+'''
 pip install sentencepiece protobuf torch transformers flask nltk
-
+'''
 
 # Step 2: Create a new Flask project
 
