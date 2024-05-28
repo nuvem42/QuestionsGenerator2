@@ -26,4 +26,5 @@ References that I used to relicate this project:
 
     pip install sentencepiece protobuf torch transformers flask nltk
 
-### Remember that to run the app.py in your codespace you need to activate the virtual enviroment 
+### Remember:
+to run the app.py in your codespace you need to activate the virtual enviroment 
